@@ -1,4 +1,5 @@
-import java.awt.Color;
+import java.awt.*;
+
 import javax.swing.*;
 
 public class BallsApp {
@@ -35,12 +36,13 @@ public class BallsApp {
 
 		// create 4 balls at random intervals
 		nap((int) (5000 * Math.random()));
-		new Ball(world, 50, 80, 5, 10,50+100*(int)Math.random(), Color.red);
+		new Ball(world, 50, 80, 5, 10,50+100*(int)Math.random(), Color.red).start();
 		nap((int) (5000 * Math.random()));
-		new Ball(world, 70, 100, 8, 6,50+100*(int)Math.random(), Color.blue);
+		new Ball(world, 70, 100, 8, 6,50+100*(int)Math.random(), Color.blue).start();
 		nap((int) (5000 * Math.random()));
-		new Ball(world, 150, 100, 9, 7,50+100*(int)Math.random(), Color.green);
+		new Ball(world, 150, 100, 9, 7,50+100*(int)Math.random(), Color.green).start();
 		nap((int) (5000 * Math.random()));
-		new Ball(world, 200, 130, 3, 8,50+100*(int)Math.random(), Color.black);
+		new Ball(world, 200, 130, 3, 8,50+100*(int)Math.random(), Color.black).start();
+
 	}
 }

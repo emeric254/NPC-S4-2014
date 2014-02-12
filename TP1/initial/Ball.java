@@ -1,6 +1,6 @@
 import java.awt.*;
 
-public class Ball implements Runnable {
+public class Ball extends Thread implements Runnable {
 
 	private BallWorld world;	
 	private int xpos, ypos;	// Ball coordinates
@@ -22,10 +22,10 @@ public class Ball implements Runnable {
 		this.col = col;
 
 		world.addBall(this);
-		run();
+//		run();
 	}
 
-	public void move() {
+	public synchronized void move() {
 		if (xpos >= world.getWidth() - ballw || xpos <= 0)
 			xinc = -xinc;
 
@@ -41,7 +41,7 @@ public class Ball implements Runnable {
 	//
 	// SYNC: This is called by the GUI
 	//
-	public void draw(Graphics g) {
+	public synchronized void draw(Graphics g) {
 		g.setColor(col);
 		g.fillOval(xpos, ypos, ballw, ballh);
 	}
