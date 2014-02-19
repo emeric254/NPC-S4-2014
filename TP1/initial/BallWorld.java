@@ -3,11 +3,12 @@ import javax.swing.*;
 import java.util.*;
 import java.awt.event.*;
 
-public class BallWorld extends JPanel implements ActionListener {
+public class BallWorld extends JPanel implements MouseListener {
 
 	// default window size
 	private final int xSize = 250;
 	private final int ySize = 250;
+	private Killer killBalls; 
 
 	private final static Color BGCOLOR = Color.white;
 
@@ -18,7 +19,8 @@ public class BallWorld extends JPanel implements ActionListener {
 		setPreferredSize(new Dimension(xSize, ySize));
 		setOpaque(true);
 		setBackground(BGCOLOR);
-//		this.addActionListener(this);
+		this.addMouseListener(this);
+		killBalls = new Killer(this);
 	}
 
 	// This method is run from the GUI thread when the window needs redrawing
@@ -40,20 +42,38 @@ public class BallWorld extends JPanel implements ActionListener {
 		});
 	}
 
-	public void actionPerformed(ActionEvent e) {
+	public void mouseClicked(MouseEvent e){
 		if(e.getSource().equals(this))
 		{
-			SwingUtilities.invokeLater(new Runnable() {
-				public void run() {
-					killBall();
-				}
-			});
+			killBalls.start();
+			System.out.println("click !!!");
+			
 		}
 	}
+	public void mouseEntered(MouseEvent e){}
+	public void mouseExited(MouseEvent e){}
+	public void mousePressed(MouseEvent e){}
+	public void mouseReleased(MouseEvent e){}
 	
-	public void killBall() {
-		try { Thread.sleep(500+(int)Math.random()); } catch (Exception e) { }
-		if(!balls.isEmpty())
-			balls.remove(0);
+	public void removeFirstBall(){
+		balls.remove(0);
+	}
+	public boolean isBallsEmpty(){
+		return balls.isEmpty();
 	}
 }
+
+class Killer extends Thread implements Runnable {
+	private BallWorld monde;
+	public Killer(BallWorld mondeDesBalles){
+		monde = mondeDesBalles;
+	}
+	
+	public synchronized void run() {
+		while(!monde.isBallsEmpty()) {
+			monde.removeFirstBall();
+			try { sleep(500); } catch (Exception e) { }
+		}
+	}
+}
+
