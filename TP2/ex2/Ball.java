@@ -36,8 +36,7 @@ public class Ball extends Thread implements Runnable {
             ypos += yinc;
         }
         if(Math.abs(xpos-ypos)<2) {
-            try{world.barrierKeeperSem.release();} catch (Exception e) {}
-            try{world.barrierSem.acquire();} catch (Exception e) {}
+            try{world.barrier.await();} catch (Exception e) {}
         }
 
         world.repaint();

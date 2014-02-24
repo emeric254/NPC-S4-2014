@@ -8,7 +8,7 @@ public class BallWorld extends JPanel {
     // default window size
     private final int xSize = 250;
     private final int ySize = 250;
-    private CyclicBarrier barrier;
+    public CyclicBarrier barrier;
 
     private final static Color BGCOLOR = Color.white;
 
