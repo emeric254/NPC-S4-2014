@@ -8,8 +8,8 @@ public class Ball extends Thread implements Runnable {
     private int period;     // period at which the Ball moves
     private final Color col;
 
-    private /*final*/ static int ballw = 10;    // width and height of the Ball
-    private /*final*/ static int ballh = 10;
+    private static int ballw = 10;    // width and height of the Ball
+    private static int ballh = 10;
 
     public Ball(BallWorld world, int xpos, int ypos, int xinc, int yinc, int period, Color col) {
         this.world = world;
@@ -21,7 +21,6 @@ public class Ball extends Thread implements Runnable {
         this.col = col;
 
         world.addBall(this);
-//      run();
     }
 
     public void move() {
@@ -35,9 +34,9 @@ public class Ball extends Thread implements Runnable {
             xpos += xinc;
             ypos += yinc;
         }
+
         if(Math.abs(xpos-ypos)<2) {
-            try{world.barrierKeeperSem.release();} catch (Exception e) {}
-            try{world.barrierSem.acquire();} catch (Exception e) {}
+            try{world.barrier.awaitEverybody();} catch (Exception e) {}
         }
 
         world.repaint();

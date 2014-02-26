@@ -19,7 +19,7 @@ public class BallWorld extends JPanel {
         setPreferredSize(new Dimension(xSize, ySize));
         setOpaque(true);
         setBackground(BGCOLOR);
-        barrier = new CyclicBarrier(4);
+        barrier = new MyCyclicBarrier(4);
     }
 
     // This method is run from the GUI thread when the window needs redrawing
@@ -39,16 +39,5 @@ public class BallWorld extends JPanel {
                 repaint();
             }
         });
-    }
-}
-
-class MyCyclicBarrier {
-    public MyCyclicBarrier()
-    {
-    }
-    public void wait()
-    {
-        while(condition) //cpt pour compter cycle ==> condition
-            wait();
     }
 }
