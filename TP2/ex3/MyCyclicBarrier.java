@@ -5,16 +5,15 @@ public class MyCyclicBarrier {
     private static volatile int i, all;
 
     public MyCyclicBarrier(int parties){
-        all=parties;
         i=0;
+        all=parties;
     }
 
     public void awaitEverybody(){
         i++;
+        while(i!=all) try { Thread.currentThread().wait(); } catch (Exception e) {}
         if(i==all)
             reset();
-        else
-            try { Thread.currentThread().wait(); } catch (Exception e) {}
     }
 
     public void reset(){

@@ -36,7 +36,7 @@ public class Ball extends Thread implements Runnable {
         }
 
         if(Math.abs(xpos-ypos)<2) {
-            try{world.barrier.awaitEverybody();} catch (Exception e) {}
+            try{ world.barrier.awaitEverybody(); } catch (Exception e) {}
         }
 
         world.repaint();
