@@ -9,14 +9,14 @@ public class MyCyclicBarrier {
         all=parties;
     }
 
-    public void awaitEverybody(){
+    public synchronized void awaitEverybody(){
         i++;
-        while(i!=all) try { Thread.currentThread().wait(); } catch (Exception e) {}
-        if(i==all)
+        if(i!=all) try { Thread.currentThread().wait(); } catch (Exception e) {}
+        else
             reset();
     }
 
-    public void reset(){
+    public synchronized void reset(){
         i=0;
         Thread.currentThread().notifyAll();
     }
