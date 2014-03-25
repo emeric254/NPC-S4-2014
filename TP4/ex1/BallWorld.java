@@ -9,6 +9,7 @@ public class BallWorld extends JPanel {
     private final int xSize = 250;
     private final int ySize = 250;
     public Multicast multiCast ;
+    public ColorMaster laule;
 
     private final static Color BGCOLOR = Color.white;
 
@@ -20,6 +21,7 @@ public class BallWorld extends JPanel {
         setOpaque(true);
         setBackground(BGCOLOR);
         multiCast = new Multicast();
+        laule = new ColorMaster(this);
     }
 
     // This method is run from the GUI thread when the window needs redrawing
@@ -43,7 +45,7 @@ public class BallWorld extends JPanel {
 }
 
 
-class ColorMaster extends Thread implements Runnable{
+class ColorMaster extends Thread {
     private BallWorld monde;
     public ColorMaster (BallWorld mondeDesBalles){
         monde = mondeDesBalles;
@@ -52,12 +54,13 @@ class ColorMaster extends Thread implements Runnable{
     public synchronized void run() {
             while(true)
             {
+                try { sleep(3000); } catch (Exception e) { }
                 int R = (int)(Math.random()*255);
                 int G = (int)(Math.random()*255);
                 int B = (int)(Math.random()*255);
                 Color color = new Color(R, G, B);
                 monde.multiCast.Send(color);
-                try { sleep(3000); } catch (Exception e) { }
+                System.err.print("Ca suxxx");
             }
 
 

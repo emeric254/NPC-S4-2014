@@ -6,7 +6,7 @@ public class Ball extends Thread implements Runnable {
     private int xpos, ypos; // Ball coordinates
     private int xinc, yinc; // delta applied when the Ball moves, determines the speed
     private int period;     // period at which the Ball moves
-    private final Color col;
+    private Color col;
 
     private /*final*/ static int ballw = 10;    // width and height of the Ball
     private /*final*/ static int ballh = 10;
@@ -36,7 +36,7 @@ public class Ball extends Thread implements Runnable {
             ypos += yinc;
         }
         if(Math.abs(xpos-ypos)<2) {
-            try{world.multiCast.Receive();} catch (Exception e) {}
+            try{col=(Color)world.multiCast.Receive();} catch (Exception e) {}
         }
 
         world.repaint();
