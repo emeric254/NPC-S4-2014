@@ -60,7 +60,6 @@ class ColorMaster extends Thread {
                 int B = (int)(Math.random()*255);
                 Color color = new Color(R, G, B);
                 monde.multiCast.Send(color);
-                System.err.print("Ca suxxx");
             }
 
 
