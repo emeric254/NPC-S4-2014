@@ -8,8 +8,7 @@ public class BallWorld extends JPanel {
     // default window size
     private final int xSize = 250;
     private final int ySize = 250;
-    private BarrierKeeper barrier;
-    public Class4 barrierSem,barrierKeeperSem;
+    public Multicast multiCast ;
 
     private final static Color BGCOLOR = Color.white;
 
@@ -20,9 +19,7 @@ public class BallWorld extends JPanel {
         setPreferredSize(new Dimension(xSize, ySize));
         setOpaque(true);
         setBackground(BGCOLOR);
-        barrierSem = new Class4();
-        barrierKeeperSem = new Class4();
-        barrier = new BarrierKeeper(this);
+        multiCast = new Multicast();
     }
 
     // This method is run from the GUI thread when the window needs redrawing
@@ -45,17 +42,27 @@ public class BallWorld extends JPanel {
     }
 }
 
-class BarrierKeeper extends Thread {
+
+class ColorMaster extends Thread implements Runnable{
     private BallWorld monde;
-    public BarrierKeeper (BallWorld mondeDesBalles){
+    public ColorMaster (BallWorld mondeDesBalles){
         monde = mondeDesBalles;
         start();
     }
-
     public synchronized void run() {
-        while(true) {
-            try{ monde.barrierKeeperSem.acquire(4); }catch(Exception e){}
-            monde.barrierSem.release(4);
-        }
+            while(true)
+            {
+                int R = (int)(Math.random()*255);
+                int G = (int)(Math.random()*255);
+                int B = (int)(Math.random()*255);
+                Color color = new Color(R, G, B);
+                monde.multiCast.Send(color);
+                try { sleep(3000); } catch (Exception e) { }
+            }
+
+
     }
 }
+
+
+

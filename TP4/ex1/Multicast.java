@@ -1,11 +1,13 @@
-public class Multicast extends IMulticast <Object> {
-    Private T temp;
-    public void Send(T data){
+public class Multicast implements IMulticast <Object> {
+    private Object temp;
+    public synchronized void Send(Object data){
         temp = data;
         notifyAll();
     }
-    public T Receive() throws InterruptedException{
-        Thread.currentThread.wait();
-        return temp;
+    public Object Receive() throws InterruptedException{
+        System.err.println("lol");
+        try {Thread.currentThread().wait();}catch(Exception e){e.printStackTrace();}
+        System.err.println("lol2");
+        return (Object)temp;
     }
 }

@@ -1,6 +1,6 @@
 import java.awt.*;
 
-public class Ball extends Thread {
+public class Ball extends Thread implements Runnable {
 
     private BallWorld world;
     private int xpos, ypos; // Ball coordinates
@@ -21,6 +21,7 @@ public class Ball extends Thread {
         this.col = col;
 
         world.addBall(this);
+//      run();
     }
 
     public void move() {
@@ -35,8 +36,7 @@ public class Ball extends Thread {
             ypos += yinc;
         }
         if(Math.abs(xpos-ypos)<2) {
-            world.barrierKeeperSem.release(1);
-            try{ world.barrierSem.acquire(1); } catch (Exception e) {}
+            try{world.multiCast.Receive();} catch (Exception e) {}
         }
 
         world.repaint();

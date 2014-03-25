@@ -8,6 +8,9 @@ public class BallsApp {
         try {
             Thread.sleep(ms);
         } catch (InterruptedException e) {
+            //
+            // Print out the name of the tread that caused this.
+            //
             System.err.println("Thread " + Thread.currentThread().getName()
                     + " throwed exception " + e.getMessage());
         }
