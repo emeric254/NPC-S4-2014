@@ -9,6 +9,7 @@ public class Broadcast extends IBroadcast <T> {
     public synchronized void Send(T i) throws InterruptedException{
         objectsended=i;
         while(laule>currentlaule) try{sleep(500);}catch(Exception e){}
+        currentlaule=0;
         notifyAll();
     }
     public synchronized T Receive() throws InterruptedException{
