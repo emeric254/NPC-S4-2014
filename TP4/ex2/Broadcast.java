@@ -1,26 +1,24 @@
 public class Broadcast implements IBroadcast <Object> {
-    private int laule=0;
-    private int currentlaule=0;
+    private int total=0;
+    private int currentNbr=0;
+    private boolean good=false;
     private Object objectsended;
 
-    public void Subscribe(){
-        laule++;
+    public synchronized void Subscribe(){
+        total++;
     }
-    public void Send(Object i) throws InterruptedException{
+    public synchronized void Send(Object i) throws InterruptedException{
         objectsended=i;
-        while(laule>currentlaule)
-        {
-            //~ try{Thread.sleep(500);}catch(Exception e){}
-            System.err.println("currentlaule : " + currentlaule );
-            System.err.println("laule : " + laule );
-        }
+        while(total>currentNbr) wait();
+        good = true;
         notifyAll();
-        currentlaule=0;
-
     }
     public synchronized Object Receive() throws InterruptedException{
-        currentlaule+=1;
-        wait();
+        if(total!=0) good=false;
+        currentNbr+=1;
+        notifyAll();
+        while(!good) wait();
+        currentNbr-=1;
         return objectsended;
     }
 }
